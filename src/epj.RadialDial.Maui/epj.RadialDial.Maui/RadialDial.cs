@@ -33,9 +33,7 @@ public class RadialDial : SKCanvasView
 
         Size = Math.Min(_info.Size.Width, _info.Size.Height);
 
-        //offsets are used to always center the dial inside the canvas
-        //var horizontalOffset = (_info.Size.Width - Size) / 2;
-        //var verticalOffset = (_info.Size.Height - Size) / 2;
+        //offsets are used to always center the dial inside the canvas and move the stroke inwards only
         var horizontalOffset = StrokeWidth / 2 + InternalPadding;
         var verticalOffset = StrokeWidth / 2 + InternalPadding;
 
