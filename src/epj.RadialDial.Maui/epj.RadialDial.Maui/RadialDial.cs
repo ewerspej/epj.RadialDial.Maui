@@ -16,10 +16,13 @@ public class RadialDial : SKCanvasView
     private SKRect _drawRect;
     private SKImageInfo _info;
     private float _adjustedStartAngle;
+    private SKPoint _touchPoint;
+    
 
     public RadialDial()
     {
         IgnorePixelScaling = false;
+        EnableTouchEvents = true;
     }
 
     protected override void OnPaintSurface(SKPaintSurfaceEventArgs e)
@@ -44,10 +47,13 @@ public class RadialDial : SKCanvasView
         //the coordinate system of SkiaSharp starts with 0 degrees at 3 o'clock (polar coordinates),
         //but we want 0 degrees at 0 o'clock, so we rotate everything by -90 degrees.
         _adjustedStartAngle = StartAngle - 90.0f;
-        
+
+        var endAngle = Utils.PointOnCircle(_touchPoint, _center, _drawRect.Width/2).ToAngle(_center) - 90.0f;
+
         using (var path = new SKPath())
         {
-            path.AddArc(_drawRect, _adjustedStartAngle, SweepAngle);
+            path.AddArc(_drawRect, _adjustedStartAngle, endAngle);
+            //canvas.RotateDegrees(-90.0f, _center.X, _center.Y);
             canvas.DrawPath(path, new SKPaint
             {
                 Style = SKPaintStyle.Stroke,
@@ -56,5 +62,16 @@ public class RadialDial : SKCanvasView
                 IsAntialias = true
             });
         }
+    }
+
+    protected override void OnTouch(SKTouchEventArgs e)
+    {
+        base.OnTouch(e);
+
+        _touchPoint = e.Location;
+
+        InvalidateSurface();
+
+        e.Handled = true;
     }
 }
