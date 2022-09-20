@@ -6,11 +6,12 @@ namespace epj.RadialDial.Maui;
 
 public class RadialDial : SKCanvasView
 {
-    public int Size { get; set; }
     public float InternalPadding { get; set; } = 20.0f;
     public float StartAngle { get; set; } = -90.0f;
     public float StrokeWidth { get; set; } = 200.0f;
 
+    private int _size;
+    private SKCanvas _canvas;
     private SKPoint _center;
     private SKRect _drawRect;
     private SKImageInfo _info;
@@ -26,19 +27,18 @@ public class RadialDial : SKCanvasView
     {
         base.OnPaintSurface(e);
 
-        var canvas = e.Surface.Canvas;
-        canvas.Clear();
+        _canvas = e.Surface.Canvas;
+        _canvas.Clear();
 
         _info = e.Info;
-
-        Size = Math.Min(_info.Size.Width, _info.Size.Height);
+        _size = Math.Min(_info.Size.Width, _info.Size.Height);
 
         //offsets are used to always center the dial inside the canvas and move the stroke inwards only
         var horizontalOffset = StrokeWidth / 2 + InternalPadding;
         var verticalOffset = StrokeWidth / 2 + InternalPadding;
 
         //setup the rectangle which we will draw in and the center point of the dial
-        _drawRect = new SKRect(horizontalOffset, verticalOffset, Size - horizontalOffset, Size - verticalOffset);
+        _drawRect = new SKRect(horizontalOffset, verticalOffset, _size - horizontalOffset, _size - verticalOffset);
         _center = new SKPoint(_drawRect.MidX, _drawRect.MidY);
 
         //calculate the angle of the touch input
@@ -52,7 +52,7 @@ public class RadialDial : SKCanvasView
         using (var path = new SKPath())
         {
             path.AddArc(_drawRect, StartAngle, sweepAngle);
-            canvas.DrawPath(path, new SKPaint
+            _canvas.DrawPath(path, new SKPaint
             {
                 Style = SKPaintStyle.Stroke,
                 Color = Colors.Red.ToSKColor(),
