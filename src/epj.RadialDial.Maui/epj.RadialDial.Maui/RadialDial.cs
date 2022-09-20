@@ -51,6 +51,12 @@ public class RadialDial : SKCanvasView
         set => SetValue(SnapToNearestIntegerProperty, value);
     }
 
+    public Color DialColor
+    {
+        get => (Color)GetValue(DialColorProperty);
+        set => SetValue(DialColorProperty, value);
+    }
+
     public static readonly BindableProperty InternalPaddingProperty = BindableProperty.Create(nameof(InternalPadding), typeof(float), typeof(RadialDial), 20.0f, propertyChanged: OnBindablePropertyChanged);
 
     public static readonly BindableProperty StrokeWidthProperty = BindableProperty.Create(nameof(StrokeWidth), typeof(float), typeof(RadialDial), 200.0f, propertyChanged: OnBindablePropertyChanged);
@@ -62,6 +68,8 @@ public class RadialDial : SKCanvasView
     public static readonly BindableProperty ValueProperty = BindableProperty.Create(nameof(Value), typeof(float), typeof(RadialDial), 10.0f, BindingMode.TwoWay, propertyChanged: OnBindablePropertyChanged);
 
     public static readonly BindableProperty SnapToNearestIntegerProperty = BindableProperty.Create(nameof(SnapToNearestInteger), typeof(bool), typeof(RadialDial), true);
+
+    public static readonly BindableProperty DialColorProperty = BindableProperty.Create(nameof(DialColor), typeof(Color), typeof(RadialDial), Colors.Red, propertyChanged: OnBindablePropertyChanged);
 
     public RadialDial()
     {
@@ -126,11 +134,13 @@ public class RadialDial : SKCanvasView
             _canvas.DrawPath(path, new SKPaint
             {
                 Style = SKPaintStyle.Stroke,
-                Color = Colors.Red.ToSKColor(),
+                Color = DialColor.ToSKColor(),
                 StrokeWidth = StrokeWidth,
                 IsAntialias = true
             });
         }
+
+        //TODO: draw scale based on Min/Max settings
     }
 
     protected override void OnTouch(SKTouchEventArgs e)
