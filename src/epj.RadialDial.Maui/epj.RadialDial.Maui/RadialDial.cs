@@ -51,10 +51,22 @@ public class RadialDial : SKCanvasView
         set => SetValue(SnapToNearestIntegerProperty, value);
     }
 
+    public bool TouchInputEnabled
+    {
+        get => (bool)GetValue(TouchInputEnabledProperty);
+        set => SetValue(TouchInputEnabledProperty, value);
+    }
+
     public Color DialColor
     {
         get => (Color)GetValue(DialColorProperty);
         set => SetValue(DialColorProperty, value);
+    }
+
+    public Color BaseColor
+    {
+        get => (Color)GetValue(BaseColorProperty);
+        set => SetValue(BaseColorProperty, value);
     }
 
     public static readonly BindableProperty InternalPaddingProperty = BindableProperty.Create(nameof(InternalPadding), typeof(float), typeof(RadialDial), 20.0f, propertyChanged: OnBindablePropertyChanged);
@@ -71,10 +83,14 @@ public class RadialDial : SKCanvasView
 
     public static readonly BindableProperty DialColorProperty = BindableProperty.Create(nameof(DialColor), typeof(Color), typeof(RadialDial), Colors.Red, propertyChanged: OnBindablePropertyChanged);
 
+    public static readonly BindableProperty BaseColorProperty = BindableProperty.Create(nameof(BaseColor), typeof(Color), typeof(RadialDial), Colors.LightGray, propertyChanged: OnBindablePropertyChanged);
+
+    public static readonly BindableProperty TouchInputEnabledProperty = BindableProperty.Create(nameof(TouchInputEnabled), typeof(bool), typeof(RadialDial), false, propertyChanged: OnTouchInputEnabledPropertyChanged);
+
     public RadialDial()
     {
         IgnorePixelScaling = false;
-        EnableTouchEvents = true;
+        EnableTouchEvents = TouchInputEnabled;
         _hasTouch = false;
     }
 
@@ -128,10 +144,22 @@ public class RadialDial : SKCanvasView
             sweepAngle = 360.0f / deltaMaxMin * Value;
         }
 
-        using (var path = new SKPath())
+        using (var basePath = new SKPath())
         {
-            path.AddArc(_drawRect, StartAngle, sweepAngle);
-            _canvas.DrawPath(path, new SKPaint
+            basePath.AddArc(_drawRect, 0, 360);
+            _canvas.DrawPath(basePath, new SKPaint
+            {
+                Style = SKPaintStyle.Stroke,
+                Color = BaseColor.ToSKColor(),
+                StrokeWidth = StrokeWidth,
+                IsAntialias = true
+            });
+        }
+
+        using (var dialPath = new SKPath())
+        {
+            dialPath.AddArc(_drawRect, StartAngle, sweepAngle);
+            _canvas.DrawPath(dialPath, new SKPaint
             {
                 Style = SKPaintStyle.Stroke,
                 Color = DialColor.ToSKColor(),
@@ -158,6 +186,12 @@ public class RadialDial : SKCanvasView
 
     private static void OnBindablePropertyChanged(BindableObject bindable, object oldValue, object newValue)
     {
+        ((RadialDial)bindable).InvalidateSurface();
+    }
+
+    private static void OnTouchInputEnabledPropertyChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        ((RadialDial)bindable).EnableTouchEvents = (bool)newValue;
         ((RadialDial)bindable).InvalidateSurface();
     }
 }
