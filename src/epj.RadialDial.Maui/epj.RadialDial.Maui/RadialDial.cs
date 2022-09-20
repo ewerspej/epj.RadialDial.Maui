@@ -118,8 +118,8 @@ public class RadialDial : SKCanvasView
         if (_hasTouch)
         {
             //calculate the angle of the touch input
-            var touchAngle = Utils
-                .PointOnCircle(_touchPoint, _center, _drawRect.Width / 2)
+            var touchAngle = _touchPoint
+                .MapToCircle(_center, _drawRect.Width / 2)
                 .ToAngle(_center);
 
             sweepAngle = (touchAngle + StartAngle).NormalizeAngleTo360();

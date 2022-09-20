@@ -17,7 +17,7 @@ public static class Utils
         return deg;
     }
 
-    public static SKPoint PointOnCircle(SKPoint point, SKPoint center, float radius)
+    public static SKPoint MapToCircle(this SKPoint point, SKPoint center, float radius)
     {
         var dX = point.X - center.X;
         var dY = point.Y - center.Y;
