@@ -14,6 +14,7 @@ public class RadialDial : SKCanvasView
     private SKRect _drawRect;
     private SKImageInfo _info;
     private SKPoint _touchPoint;
+    private bool _hasTouch;
 
     public float InternalPadding
     {
@@ -27,16 +28,45 @@ public class RadialDial : SKCanvasView
         set => SetValue(StrokeWidthProperty, value);
     }
 
+    public float Min
+    {
+        get => (float)GetValue(MinProperty);
+        set => SetValue(MinProperty, value);
+    }
+    public float Max
+    {
+        get => (float)GetValue(MaxProperty);
+        set => SetValue(MaxProperty, value);
+    }
+
+    public float Value
+    {
+        get => (float)GetValue(ValueProperty);
+        set => SetValue(ValueProperty, value);
+    }
+
+    //TODO: implement snapping to nearest integer
+    public bool SnapToNearestInteger
+    {
+        get;
+        set;
+    }
+
     public static readonly BindableProperty InternalPaddingProperty = BindableProperty.Create(nameof(InternalPadding), typeof(float), typeof(RadialDial), 20.0f, propertyChanged: OnBindablePropertyChanged);
 
     public static readonly BindableProperty StrokeWidthProperty = BindableProperty.Create(nameof(StrokeWidth), typeof(float), typeof(RadialDial), 200.0f, propertyChanged: OnBindablePropertyChanged);
 
-    //TODO: add Value (with BindingMode.TwoWay), Min (>= 0) and Max properties as well as a boolean property to round to nearest integer
+    public static readonly BindableProperty MinProperty = BindableProperty.Create(nameof(Min), typeof(float), typeof(RadialDial), 0.0f);
+
+    public static readonly BindableProperty MaxProperty = BindableProperty.Create(nameof(Max), typeof(float), typeof(RadialDial), 60.0f);
+
+    public static readonly BindableProperty ValueProperty = BindableProperty.Create(nameof(Value), typeof(float), typeof(RadialDial), 10.0f, BindingMode.TwoWay, propertyChanged: OnBindablePropertyChanged);
 
     public RadialDial()
     {
         IgnorePixelScaling = false;
         EnableTouchEvents = true;
+        _hasTouch = false;
     }
 
     protected override void OnPaintSurface(SKPaintSurfaceEventArgs e)
@@ -57,15 +87,27 @@ public class RadialDial : SKCanvasView
         _drawRect = new SKRect(horizontalOffset, verticalOffset, _size - horizontalOffset, _size - verticalOffset);
         _center = new SKPoint(_drawRect.MidX, _drawRect.MidY);
 
-        //calculate the angle of the touch input
-        var touchAngle = Utils
-            .PointOnCircle(_touchPoint, _center, _drawRect.Width / 2)
-            .ToAngle(_center);
+        float sweepAngle;
+        var deltaMaxMin = Max - Min;
 
-        //calculate the sweepAngle and map it to the 0..360 range
-        var sweepAngle = (touchAngle + StartAngle).MapTo360();
+        if (_hasTouch)
+        {
+            //calculate the angle of the touch input
+            var touchAngle = Utils
+                .PointOnCircle(_touchPoint, _center, _drawRect.Width / 2)
+                .ToAngle(_center);
 
-        //TODO: set Value property with mapped value in Min/Max range (and rounded to nearest integer, if requested)
+            //calculate the sweepAngle and map it to the 0..360 range
+            sweepAngle = (touchAngle + StartAngle).MapTo360();
+
+            //TODO: round (snap) to nearest integer, if requested and update sweepAngle
+            var resultValue = deltaMaxMin / 360.0f * sweepAngle;
+            Value = resultValue;
+        }
+        else
+        {
+            sweepAngle = 360.0f / deltaMaxMin * Value;
+        }
 
         using (var path = new SKPath())
         {
@@ -83,6 +125,8 @@ public class RadialDial : SKCanvasView
     protected override void OnTouch(SKTouchEventArgs e)
     {
         base.OnTouch(e);
+
+        _hasTouch = true;
 
         _touchPoint = e.Location;
 
