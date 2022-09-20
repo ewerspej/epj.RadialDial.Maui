@@ -26,4 +26,6 @@ public static class Utils
     }
 
     public static float InDegrees(this float radians) => (float)(180.0 / Math.PI) * radians;
+
+    public static float MapTo360(this float angle) => angle - 360.0f * (float)Math.Floor(angle / 360.0f);
 }
