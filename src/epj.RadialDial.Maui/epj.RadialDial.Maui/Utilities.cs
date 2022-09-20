@@ -2,7 +2,7 @@
 
 namespace epj.RadialDial.Maui;
 
-public static class Utils
+public static class Utilities
 {
     public static float ToAngle(this SKPoint point, SKPoint center)
     {
