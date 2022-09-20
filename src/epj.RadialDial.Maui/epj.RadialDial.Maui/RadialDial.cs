@@ -6,9 +6,7 @@ namespace epj.RadialDial.Maui;
 
 public class RadialDial : SKCanvasView
 {
-    public float InternalPadding { get; set; } = 20.0f;
-    public float StartAngle { get; set; } = -90.0f;
-    public float StrokeWidth { get; set; } = 200.0f;
+    private const float StartAngle = -90.0f;
 
     private int _size;
     private SKCanvas _canvas;
@@ -16,7 +14,25 @@ public class RadialDial : SKCanvasView
     private SKRect _drawRect;
     private SKImageInfo _info;
     private SKPoint _touchPoint;
-    
+
+    public float InternalPadding
+    {
+        get => (float)GetValue(InternalPaddingProperty);
+        set => SetValue(InternalPaddingProperty, value);
+    }
+
+    public float StrokeWidth
+    {
+        get => (float)GetValue(StrokeWidthProperty);
+        set => SetValue(StrokeWidthProperty, value);
+    }
+
+    public static readonly BindableProperty InternalPaddingProperty = BindableProperty.Create(nameof(InternalPadding), typeof(float), typeof(RadialDial), 20.0f, propertyChanged: OnBindablePropertyChanged);
+
+    public static readonly BindableProperty StrokeWidthProperty = BindableProperty.Create(nameof(StrokeWidth), typeof(float), typeof(RadialDial), 200.0f, propertyChanged: OnBindablePropertyChanged);
+
+    //TODO: add Value (with BindingMode.TwoWay), Min (>= 0) and Max properties as well as a boolean property to round to nearest integer
+
     public RadialDial()
     {
         IgnorePixelScaling = false;
@@ -49,6 +65,8 @@ public class RadialDial : SKCanvasView
         //calculate the sweepAngle and map it to the 0..360 range
         var sweepAngle = (touchAngle + StartAngle).MapTo360();
 
+        //TODO: set Value property with mapped value in Min/Max range (and rounded to nearest integer, if requested)
+
         using (var path = new SKPath())
         {
             path.AddArc(_drawRect, StartAngle, sweepAngle);
@@ -71,5 +89,10 @@ public class RadialDial : SKCanvasView
         InvalidateSurface();
 
         e.Handled = true;
+    }
+
+    private static void OnBindablePropertyChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+        ((RadialDial)bindable).InvalidateSurface();
     }
 }
