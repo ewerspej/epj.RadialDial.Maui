@@ -45,11 +45,10 @@ public class RadialDial : SKCanvasView
         set => SetValue(ValueProperty, value);
     }
 
-    //TODO: implement snapping to nearest integer
     public bool SnapToNearestInteger
     {
-        get;
-        set;
+        get => (bool)GetValue(SnapToNearestIntegerProperty);
+        set => SetValue(SnapToNearestIntegerProperty, value);
     }
 
     public static readonly BindableProperty InternalPaddingProperty = BindableProperty.Create(nameof(InternalPadding), typeof(float), typeof(RadialDial), 20.0f, propertyChanged: OnBindablePropertyChanged);
@@ -61,6 +60,8 @@ public class RadialDial : SKCanvasView
     public static readonly BindableProperty MaxProperty = BindableProperty.Create(nameof(Max), typeof(float), typeof(RadialDial), 60.0f);
 
     public static readonly BindableProperty ValueProperty = BindableProperty.Create(nameof(Value), typeof(float), typeof(RadialDial), 10.0f, BindingMode.TwoWay, propertyChanged: OnBindablePropertyChanged);
+
+    public static readonly BindableProperty SnapToNearestIntegerProperty = BindableProperty.Create(nameof(SnapToNearestInteger), typeof(bool), typeof(RadialDial), true);
 
     public RadialDial()
     {
@@ -100,9 +101,19 @@ public class RadialDial : SKCanvasView
             //calculate the sweepAngle and map it to the 0..360 range
             sweepAngle = (touchAngle + StartAngle).MapTo360();
 
-            //TODO: round (snap) to nearest integer, if requested and update sweepAngle
             var resultValue = deltaMaxMin / 360.0f * sweepAngle;
-            Value = resultValue;
+
+            if (SnapToNearestInteger)
+            {
+                //round to nearest integer and update sweepAngle
+                var snapValue = (float)Math.Round(resultValue);
+                sweepAngle = 360.0f / deltaMaxMin * snapValue;
+                Value = snapValue;
+            }
+            else
+            {
+                Value = resultValue;
+            }
         }
         else
         {
