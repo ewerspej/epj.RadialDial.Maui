@@ -122,8 +122,7 @@ public class RadialDial : SKCanvasView
                 .PointOnCircle(_touchPoint, _center, _drawRect.Width / 2)
                 .ToAngle(_center);
 
-            //calculate the sweepAngle and map it to the 0..360 range
-            sweepAngle = (touchAngle + StartAngle).MapTo360();
+            sweepAngle = (touchAngle + StartAngle).NormalizeAngleTo360();
 
             var resultValue = deltaMaxMin / 360.0f * sweepAngle;
 
