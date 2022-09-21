@@ -8,5 +8,5 @@ Can be used as a dial or gauge as well as a progress ring or progress indicator
 
 ## Preview
 
-![]<img src="radialdial_sample.gif" width="360">
+<img src="radialdial_sample.gif" width="360">
 
