@@ -180,47 +180,50 @@ public class RadialDial : SKCanvasView
 
         //calculate amount and divisor for scale units
         var scaleDivisor = (Max - Min) / (float)ScaleUnits;
-        var unitCount = (int)Math.Floor(scaleDivisor);
+        var elementCount = (int)Math.Floor(scaleDivisor);
 
-        if ((scaleDivisor - unitCount) * ScaleUnits > 1.0f)
+        //we may be able to squeeze in one more scale element
+        if ((scaleDivisor - elementCount) * ScaleUnits > 1.0f)
         {
-            unitCount += 1;
+            elementCount += 1;
         }
 
         //account for scale fractions
-        var clipFactor = unitCount / scaleDivisor;
+        var clipFactor = elementCount / scaleDivisor;
         var clippedAngle = 360.0f * clipFactor;
 
         //calculate angles for scale
-        var angles = new float[unitCount];
-        for (var i = 0; i < unitCount; i++)
+        var angles = new float[elementCount];
+        for (var i = 0; i < elementCount; i++)
         {
-            angles[i] = clippedAngle / unitCount * i;
+            angles[i] = clippedAngle / elementCount * i;
         }
 
-        //draw scale units for each angle
+        //rotate canvas before drawing scale element
+        _canvas.Save();
+        _canvas.RotateDegrees(StartAngle, _dialCenter.X, _dialCenter.Y);
+
+        //draw scale elements for each angle
         foreach (var angle in angles)
         {
             var rad = angle.DegreeToRadian();
-
             var p0 = rad.ToPointOnCircle(_scaleCenter, _scaleRect.Width / 2);
             var p1 = rad.ToPointOnCircle(_scaleCenter, _scaleRect.Width / 2 - ScaleLength);
 
-            using (var path = new SKPath())
+            using var path = new SKPath();
+            path.AddPoly(new[] { p0, p1 }, close: false);
+            
+            _canvas.DrawPath(path, new SKPaint
             {
-                path.AddPoly(new[] { p0, p1 }, close: false);
-                _canvas.Save();
-                _canvas.RotateDegrees(StartAngle, _dialCenter.X, _dialCenter.Y);
-                _canvas.DrawPath(path, new SKPaint
-                {
-                    Style = SKPaintStyle.Stroke,
-                    Color = ScaleColor.ToSKColor(),
-                    StrokeWidth = ScaleThickness,
-                    IsAntialias = true
-                });
-                _canvas.Restore();
-            }
+                Style = SKPaintStyle.Stroke,
+                Color = ScaleColor.ToSKColor(),
+                StrokeWidth = ScaleThickness,
+                IsAntialias = true
+            });
         }
+
+        //rotate canvas back to original position
+        _canvas.Restore();
     }
 
     private void DrawDial()
@@ -256,32 +259,28 @@ public class RadialDial : SKCanvasView
             sweepAngle = 360.0f / deltaMaxMin * (Value - Min);
         }
 
-        using (var dialPath = new SKPath())
+        using var dialPath = new SKPath();
+        dialPath.AddArc(_dialRect, StartAngle, sweepAngle);
+        _canvas.DrawPath(dialPath, new SKPaint
         {
-            dialPath.AddArc(_dialRect, StartAngle, sweepAngle);
-            _canvas.DrawPath(dialPath, new SKPaint
-            {
-                Style = SKPaintStyle.Stroke,
-                Color = DialColor.ToSKColor(),
-                StrokeWidth = StrokeWidth,
-                IsAntialias = true
-            });
-        }
+            Style = SKPaintStyle.Stroke,
+            Color = DialColor.ToSKColor(),
+            StrokeWidth = StrokeWidth,
+            IsAntialias = true
+        });
     }
 
     private void DrawBase()
     {
-        using (var basePath = new SKPath())
+        using var basePath = new SKPath();
+        basePath.AddArc(_dialRect, 0, 360);
+        _canvas.DrawPath(basePath, new SKPaint
         {
-            basePath.AddArc(_dialRect, 0, 360);
-            _canvas.DrawPath(basePath, new SKPaint
-            {
-                Style = SKPaintStyle.Stroke,
-                Color = BaseColor.ToSKColor(),
-                StrokeWidth = StrokeWidth,
-                IsAntialias = true
-            });
-        }
+            Style = SKPaintStyle.Stroke,
+            Color = BaseColor.ToSKColor(),
+            StrokeWidth = StrokeWidth,
+            IsAntialias = true
+        });
     }
 
     protected override void OnTouch(SKTouchEventArgs e)
