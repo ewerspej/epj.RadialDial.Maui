@@ -116,3 +116,7 @@ Most of these properties are bindable for MVVM goodness. If something is missing
 ## Tips & Tricks
 
 * Although the scale is on the outside of the dial by default, you can also draw it inside the dial by adjusting the values for *InternalPadding*, *StrokeWidth* and *ScaleDistance*
+
+## Notes
+* Uses SkiaSharp for MAUI
+* Inspired by https://github.com/codechem/CC.CircularSlider.Forms
