@@ -96,7 +96,7 @@ Most of these properties are bindable for MVVM goodness. If something is missing
 | Float      | Value                | The current value of the dial (two-way bindable)                        | 10            |
 | Integer    | Min                  | The minimum value of the dial                                           | 0             |
 | Integer    | Max                  | The maximum value of the dial                                           | 60            |
-| Float      | StrokeWidth          | Width of the Dial                                                       | 200.0         |
+| Float      | DialWidth            | Thickness of the Dial                                                   | 200.0         |
 | Float      | InternalPadding      | Padding of the Canvas                                                   | 20.0          |
 | Boolean    | TouchInputEnabled    | Enable/Disable touch events                                             | true          |
 | Boolean    | SnapToNearestInteger | Uses full integer steps for *Value* when enabled                        | true          |
