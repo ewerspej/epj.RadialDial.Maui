@@ -16,7 +16,15 @@
       TouchInputEnabled="True"
       StrokeWidth="{Binding Path=Value, Source={x:Reference StrokeWidthSlider}}"
       DialColor="Orange"
-      BaseColor="LightSkyBlue"/>
+      BaseColor="LightSkyBlue"
+      Min="0"
+      Max="60"
+      ShowScale="True"
+      InternalPadding="10"
+      ScaleDistance="10"
+      ScaleLength="24"
+      ScaleThickness="8"
+      ScaleUnits="5"/>
 
     <Label 
       HorizontalOptions="Fill"
@@ -30,7 +38,7 @@
       x:Name="StrokeWidthSlider"
       Minimum="1"
       Maximum="300"
-      Value="150"/>
+      Value="45"/>
   </VerticalStackLayout>
 
 </ContentPage>
