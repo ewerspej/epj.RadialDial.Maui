@@ -4,7 +4,7 @@ Radial Dial component for .NET MAUI
 
 ## Purpose
 
-Can be used as a dial or gauge as well as a progress ring or progress indicator
+Can be used as a circular dial or gauge as well as a progress ring or progress indicator
 
 ## Preview
 
