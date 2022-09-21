@@ -4,7 +4,7 @@ using SkiaSharp.Views.Maui.Controls;
 
 namespace epj.RadialDial.Maui;
 
-public class RadialDial : SKCanvasView
+public sealed class RadialDial : SKCanvasView
 {
     private const float StartAngle = -90.0f;
 
@@ -24,10 +24,10 @@ public class RadialDial : SKCanvasView
         set => SetValue(InternalPaddingProperty, value);
     }
 
-    public float StrokeWidth
+    public float DialWidth
     {
-        get => (float)GetValue(StrokeWidthProperty);
-        set => SetValue(StrokeWidthProperty, value);
+        get => (float)GetValue(DialWidthProperty);
+        set => SetValue(DialWidthProperty, value);
     }
 
     public int Min
@@ -109,7 +109,7 @@ public class RadialDial : SKCanvasView
 
     public static readonly BindableProperty InternalPaddingProperty = BindableProperty.Create(nameof(InternalPadding), typeof(float), typeof(RadialDial), 20.0f, propertyChanged: OnBindablePropertyChanged);
 
-    public static readonly BindableProperty StrokeWidthProperty = BindableProperty.Create(nameof(StrokeWidth), typeof(float), typeof(RadialDial), 200.0f, propertyChanged: OnBindablePropertyChanged);
+    public static readonly BindableProperty DialWidthProperty = BindableProperty.Create(nameof(DialWidth), typeof(float), typeof(RadialDial), 200.0f, propertyChanged: OnBindablePropertyChanged);
 
     public static readonly BindableProperty MinProperty = BindableProperty.Create(nameof(Min), typeof(int), typeof(RadialDial), 0, propertyChanged: OnBindablePropertyChanged);
 
@@ -156,7 +156,7 @@ public class RadialDial : SKCanvasView
 
         //offsets are used to always center the dial inside the canvas and move the stroke inwards only
         var scaleOffset = InternalPadding;
-        var dialOffset = StrokeWidth / 2 + InternalPadding + ScaleLength + ScaleDistance;
+        var dialOffset = DialWidth / 2 + InternalPadding + ScaleLength + ScaleDistance;
 
         //setup the drawing rectangle and center for the scale
         _scaleRect = new SKRect(scaleOffset, scaleOffset, _size - scaleOffset, _size - scaleOffset);
@@ -265,7 +265,7 @@ public class RadialDial : SKCanvasView
         {
             Style = SKPaintStyle.Stroke,
             Color = DialColor.ToSKColor(),
-            StrokeWidth = StrokeWidth,
+            StrokeWidth = DialWidth,
             IsAntialias = true
         });
     }
@@ -278,7 +278,7 @@ public class RadialDial : SKCanvasView
         {
             Style = SKPaintStyle.Stroke,
             Color = BaseColor.ToSKColor(),
-            StrokeWidth = StrokeWidth,
+            StrokeWidth = DialWidth,
             IsAntialias = true
         });
     }

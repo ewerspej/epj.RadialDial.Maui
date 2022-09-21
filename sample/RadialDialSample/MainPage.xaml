@@ -14,7 +14,7 @@
       WidthRequest="250"
       HeightRequest="250"
       TouchInputEnabled="True"
-      StrokeWidth="{Binding Path=Value, Source={x:Reference StrokeWidthSlider}}"
+      DialWidth="{Binding Path=Value, Source={x:Reference DialWidthSlider}}"
       DialColor="Orange"
       BaseColor="LightSkyBlue"
       Min="0"
@@ -35,7 +35,7 @@
       Text="{Binding Path=Value, Source={x:Reference RadialControlControl}}"/>
 
     <Slider 
-      x:Name="StrokeWidthSlider"
+      x:Name="DialWidthSlider"
       Minimum="1"
       Maximum="300"
       Value="45"/>
