@@ -22,8 +22,12 @@ Supported are **Android** and **iOS**, other platforms (incl. Windows and MacCat
 ## Preview
 
 This is just a preview, the styling of the control can be customized. The number label is not included.
-
-<img src="radialdial_sample.gif" width="360">
+<div>
+    <img align="top" src="sample1.png" width="280"/>
+    <img align="top" src="sample2.png" width="280"/>
+</div>
+<br/>
+<img src="radialdial_sample.gif" width="400"/>
 
 ## Usage
 
