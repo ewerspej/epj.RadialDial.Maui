@@ -15,9 +15,32 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<Title>Radial Dial for MAUI</Title>
+		<Copyright></Copyright>
+		<PackageProjectUrl>https://github.com/ewerspej/epj.RadialDial.Maui</PackageProjectUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<RepositoryUrl>https://github.com/ewerspej/epj.RadialDial.Maui</RepositoryUrl>
+		<PackageTags>radial; circular; dial; progress; status; ring; maui; control; arc; touch; skiasharp; android; ios; cross-platform</PackageTags>
+		<Description>A simple multi-purpose component that can be used as a circular dial or gauge as well as a progress ring or progress indicator.</Description>
+		<RepositoryType>git</RepositoryType>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<Authors>ewerspej</Authors>
+		<Version>1.0.0-alpha</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Include="..\..\..\LICENSE">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	  <None Include="..\..\..\README.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	</ItemGroup>
+
+  <ItemGroup>
 	  <PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.2" />
 	  <PackageReference Include="SkiaSharp.Views.Maui.Core" Version="2.88.2" />
 	</ItemGroup>
