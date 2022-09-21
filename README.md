@@ -16,7 +16,7 @@ Supported are **Android** and **iOS**, other platforms (incl. Windows and MacCat
 
 * Touch Input
 * Snap value to full integer
-* Adjustable Scale (unit values are currently not featured yet, but the scale steps can be defined)
+* Adjustable Scale (unit labels are currently not featured yet, but the scale steps can be defined)
 * Show/Hide Scale
 
 ## Preview
