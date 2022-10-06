@@ -12,7 +12,16 @@ A simple multi-purpose component that can be used as a circular dial or gauge as
 
 ## Platforms
 
-Supported are **Android** and **iOS**, other platforms (incl. Windows and MacCatalyst) have not been tested, but may work anyway.
+The following platforms are currently supported:
+
+| Platform       | Supported          |
+|----------------|--------------------|
+| Android        | Yes                |
+| iOS            | Yes                |
+| Windows        | Yes                |
+| MacCatalyst    | Maybe (not tested) |
+
+For use in Desktop applications, the ```TouchInputEnabled``` property needs to be set dynamically.
 
 ## Highlights
 
