@@ -117,6 +117,14 @@ public sealed class RadialDial : SKCanvasView
         set => SetValue(ScaleColorProperty, value);
     }
 
+    public bool UseGradient
+    {
+        get => (bool)GetValue(UseGradientProperty);
+        set => SetValue(UseGradientProperty, value);
+    }
+
+    public List<Color> GradientColors { get; set; } = new();
+
     #endregion
 
     #region Bindable Properties
@@ -151,9 +159,12 @@ public sealed class RadialDial : SKCanvasView
 
     public static readonly BindableProperty ScaleThicknessProperty = BindableProperty.Create(nameof(ScaleThickness), typeof(float), typeof(RadialDial), 10.0f, propertyChanged: OnBindablePropertyChanged);
 
+    public static readonly BindableProperty UseGradientProperty = BindableProperty.Create(nameof(UseGradient), typeof(bool), typeof(RadialDial), false, propertyChanged: OnBindablePropertyChanged);
+
     #endregion
 
     #region Constructor
+
     public RadialDial()
     {
         IgnorePixelScaling = false;
@@ -282,13 +293,27 @@ public sealed class RadialDial : SKCanvasView
 
         using var dialPath = new SKPath();
         dialPath.AddArc(_dialRect, StartAngle, sweepAngle);
-        _canvas.DrawPath(dialPath, new SKPaint
+
+        using var dialPaint = new SKPaint
         {
             Style = SKPaintStyle.Stroke,
             Color = DialColor.ToSKColor(),
             StrokeWidth = DialWidth,
             IsAntialias = true
-        });
+        };
+
+        if (UseGradient && GradientColors?.Count > 0)
+        {
+            var colors = GradientColors.Select(color => color.ToSKColor()).ToArray();
+            dialPaint.Shader = SKShader.CreateSweepGradient(_dialCenter, colors, SKShaderTileMode.Decal, 0.0f, 360.0f)
+                .WithLocalMatrix(SKMatrix.CreateRotationDegrees(StartAngle, _dialCenter.X, _dialCenter.Y));
+        }
+        else
+        {
+            dialPaint.Color = DialColor.ToSKColor();
+        }
+
+        _canvas.DrawPath(dialPath, dialPaint);
     }
 
     private void DrawBase()

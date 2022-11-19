@@ -24,7 +24,17 @@
       ScaleDistance="10"
       ScaleLength="24"
       ScaleThickness="8"
-      ScaleUnits="5"/>
+      ScaleUnits="5"
+      UseGradient="True">
+      <maui:RadialDial.GradientColors>
+        <Color>DarkGreen</Color>
+        <Color>DarkGreen</Color>
+        <Color>YellowGreen</Color>
+        <Color>Yellow</Color>
+        <Color>OrangeRed</Color>
+        <Color>DarkRed</Color>
+      </maui:RadialDial.GradientColors>
+    </maui:RadialDial>
 
     <Label 
       HorizontalOptions="Fill"
