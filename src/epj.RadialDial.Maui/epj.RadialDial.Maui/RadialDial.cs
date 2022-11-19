@@ -6,7 +6,13 @@ namespace epj.RadialDial.Maui;
 
 public sealed class RadialDial : SKCanvasView
 {
+    #region Constants
+
     private const float StartAngle = -90.0f;
+
+    #endregion
+
+    #region Private Fields
 
     private int _size;
     private SKCanvas _canvas;
@@ -17,6 +23,10 @@ public sealed class RadialDial : SKCanvasView
     private SKImageInfo _info;
     private SKPoint _touchPoint;
     private bool _hasTouch;
+
+    #endregion
+
+    #region Properties
 
     public float InternalPadding
     {
@@ -107,6 +117,10 @@ public sealed class RadialDial : SKCanvasView
         set => SetValue(ScaleColorProperty, value);
     }
 
+    #endregion
+
+    #region Bindable Properties
+
     public static readonly BindableProperty InternalPaddingProperty = BindableProperty.Create(nameof(InternalPadding), typeof(float), typeof(RadialDial), 20.0f, propertyChanged: OnBindablePropertyChanged);
 
     public static readonly BindableProperty DialWidthProperty = BindableProperty.Create(nameof(DialWidth), typeof(float), typeof(RadialDial), 200.0f, propertyChanged: OnBindablePropertyChanged);
@@ -137,12 +151,19 @@ public sealed class RadialDial : SKCanvasView
 
     public static readonly BindableProperty ScaleThicknessProperty = BindableProperty.Create(nameof(ScaleThickness), typeof(float), typeof(RadialDial), 10.0f, propertyChanged: OnBindablePropertyChanged);
 
+    #endregion
+
+    #region Constructor
     public RadialDial()
     {
         IgnorePixelScaling = false;
         EnableTouchEvents = TouchInputEnabled;
         _hasTouch = false;
     }
+
+    #endregion
+
+    #region Implementation
 
     protected override void OnPaintSurface(SKPaintSurfaceEventArgs e)
     {
@@ -212,7 +233,7 @@ public sealed class RadialDial : SKCanvasView
 
             using var path = new SKPath();
             path.AddPoly(new[] { p0, p1 }, close: false);
-            
+
             _canvas.DrawPath(path, new SKPaint
             {
                 Style = SKPaintStyle.Stroke,
@@ -306,4 +327,6 @@ public sealed class RadialDial : SKCanvasView
         ((RadialDial)bindable).EnableTouchEvents = (bool)newValue;
         ((RadialDial)bindable).InvalidateSurface();
     }
+
+    #endregion
 }
