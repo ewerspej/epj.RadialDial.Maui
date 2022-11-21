@@ -29,20 +29,22 @@ For use in Desktop applications, the ```TouchInputEnabled``` property needs to b
 * Snap value to full integer
 * Adjustable Scale (unit labels are currently not featured yet, but the scale steps can be defined)
 * Show/Hide Scale
+* **NEW** Color Gradient for Dial
 
 ## Preview
 
 This is just a preview, the styling of the control can be customized. The number label is not included.
 <div>
-    <img align="top" src="sample1.png" width="280"/>
-    <img align="top" src="sample2.png" width="280"/>
+    <img align="top" src="sample1.png" width="240"/>
+    <img align="top" src="sample2.png" width="240"/>
+    <img align="top" src="sample3.png" width="240"/>
 </div>
 <br/>
 <img src="radialdial_sample.gif" width="400"/>
 
 ## Usage
 
-**Important: Register Library**
+### Important: Register Library
 
 In MauiProgram.cs, add a call to *UseRadialDial()* on the builder object:
 
@@ -68,10 +70,9 @@ public static class MauiProgram
         return builder.Build();
     }
 }
-
 ```
 
-**XAML**
+### XAML
 
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
@@ -102,27 +103,52 @@ public static class MauiProgram
 </ContentPage>
 ```
 
+### Color Gradient
+
+In order to use the Color Gradient for the Dial, set `UseGradient="True"` and provide the colors to the `GradientColors` list as follows:
+
+```xml
+<maui:RadialDial
+  TouchInputEnabled="True"
+  BaseColor="LightSkyBlue" 
+  Min="0"
+  Max="60"
+  InternalPadding="10"
+  UseGradient="True">
+  <maui:RadialDial.GradientColors>
+    <Color>DarkGreen</Color>
+    <Color>YellowGreen</Color>
+    <Color>Yellow</Color>
+    <Color>OrangeRed</Color>
+  </maui:RadialDial.GradientColors>
+</maui:RadialDial>
+```
+
+**Note:** Enabling the Color Gradient will override the `DialColor` property.
+
 ## Properties
 
 Most of these properties are bindable for MVVM goodness. If something is missing, please open an issue.
 
-| Type       | Property             | Description                                                             | Default Value |
-|------------|----------------------|-------------------------------------------------------------------------|---------------|
-| Float      | Value                | The current value of the dial (two-way bindable)                        | 10            |
-| Integer    | Min                  | The minimum value of the dial                                           | 0             |
-| Integer    | Max                  | The maximum value of the dial                                           | 60            |
-| Float      | DialWidth            | Thickness of the Dial                                                   | 200.0         |
-| Float      | InternalPadding      | Padding of the Canvas                                                   | 20.0          |
-| Boolean    | TouchInputEnabled    | Enable/Disable touch events                                             | true          |
-| Boolean    | SnapToNearestInteger | Uses full integer steps for *Value* when enabled                        | true          |
-| Boolean    | ShowScale            | Whether or not to display the scale units                               | true          |
-| Integer    | ScaleUnits           | Defines to show a scale unit for every *n* steps, e.g. every five steps | 5             |
-| Float      | ScaleThickness       | Thickness of a scale unit                                               | 10.0          |
-| Float      | ScaleDistance        | Offset between scale and dial                                           | 20.0          |
-| Float      | ScaleLength          | Length of a scale unit                                                  | 30.0          |
-| Color      | DialColor            | The main color of the dial                                              | Red           |
-| Color      | BaseColor            | The color for the base of the dial                                      | LightGray     |
-| Color      | ScaleColor           | The color of the scale on the dial                                      | LightGray     |
+| Type        | Property             | Description                                                             | Default Value |
+|-------------|----------------------|-------------------------------------------------------------------------|---------------|
+| Float       | Value                | The current value of the dial (two-way bindable)                        | `10`          |
+| Integer     | Min                  | The minimum value of the dial                                           | `0`           |
+| Integer     | Max                  | The maximum value of the dial                                           | `60`          |
+| Float       | DialWidth            | Thickness of the Dial                                                   | `200.0`       |
+| Float       | InternalPadding      | Padding of the Canvas                                                   | `20.0`        |
+| Boolean     | TouchInputEnabled    | Enable/Disable touch events                                             | `true`        |
+| Boolean     | SnapToNearestInteger | Uses full integer steps for *Value* when enabled                        | `true`        |
+| Boolean     | ShowScale            | Whether or not to display the scale units                               | `true`        |
+| Integer     | ScaleUnits           | Defines to show a scale unit for every *n* steps, e.g. every five steps | `5`           |
+| Float       | ScaleThickness       | Thickness of a scale unit                                               | `10.0`        |
+| Float       | ScaleDistance        | Offset between scale and dial                                           | `20.0`        |
+| Float       | ScaleLength          | Length of a scale unit                                                  | `30.0`        |
+| Color       | DialColor            | The main color of the dial                                              | `Red`         |
+| Color       | BaseColor            | The color for the base of the dial                                      | `LightGray`   |
+| Color       | ScaleColor           | The color of the scale on the dial                                      | `LightGray`   |
+| Boolean     | UseGradient          | Set to `true` in order to enable Color Gradient                         | `false`       |
+| List<Color> | GradientColors       | List of Colors used for Gradient (from first to last)                   | `<empty>`     |
 
 ## Tips & Tricks
 
