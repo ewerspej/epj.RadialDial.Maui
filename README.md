@@ -1,6 +1,7 @@
 # epj.RadialDial.Maui
 ![License](https://img.shields.io/github/license/ewerspej/epj.RadialDial.Maui)
 [![Nuget](https://img.shields.io/nuget/v/epj.RadialDial.Maui)](https://www.nuget.org/packages/epj.RadialDial.Maui/)
+[![Nuget](https://img.shields.io/nuget/vpre/epj.RadialDial.Maui)](https://www.nuget.org/packages/epj.RadialDial.Maui/)
 
 Radial Dial component for .NET MAUI
 
