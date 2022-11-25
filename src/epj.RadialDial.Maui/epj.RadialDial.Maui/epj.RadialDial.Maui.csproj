@@ -24,7 +24,7 @@
 		<RepositoryType>git</RepositoryType>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 		<Authors>ewerspej</Authors>
-		<Version>1.0.1-pre</Version>
+		<Version>1.0.2-pre</Version>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	</PropertyGroup>
 

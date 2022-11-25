@@ -63,12 +63,6 @@ public sealed class RadialDial : SKCanvasView
         set => SetValue(SnapToNearestIntegerProperty, value);
     }
 
-    public bool TouchInputEnabled
-    {
-        get => (bool)GetValue(TouchInputEnabledProperty);
-        set => SetValue(TouchInputEnabledProperty, value);
-    }
-
     public bool ShowScale
     {
         get => (bool)GetValue(ShowScaleProperty);
@@ -125,6 +119,10 @@ public sealed class RadialDial : SKCanvasView
 
     public List<Color> GradientColors { get; set; } = new();
 
+    public bool TouchInputEnabled { get; set; }
+
+    public bool UsePixelScaling { get; set; }
+
     #endregion
 
     #region Bindable Properties
@@ -140,8 +138,6 @@ public sealed class RadialDial : SKCanvasView
     public static readonly BindableProperty ValueProperty = BindableProperty.Create(nameof(Value), typeof(float), typeof(RadialDial), 10.0f, BindingMode.TwoWay, propertyChanged: OnBindablePropertyChanged);
 
     public static readonly BindableProperty SnapToNearestIntegerProperty = BindableProperty.Create(nameof(SnapToNearestInteger), typeof(bool), typeof(RadialDial), true);
-
-    public static readonly BindableProperty TouchInputEnabledProperty = BindableProperty.Create(nameof(TouchInputEnabled), typeof(bool), typeof(RadialDial), false, propertyChanged: OnTouchInputEnabledPropertyChanged);
 
     public static readonly BindableProperty DialColorProperty = BindableProperty.Create(nameof(DialColor), typeof(Color), typeof(RadialDial), Colors.Red, propertyChanged: OnBindablePropertyChanged);
 
@@ -167,7 +163,7 @@ public sealed class RadialDial : SKCanvasView
 
     public RadialDial()
     {
-        IgnorePixelScaling = false;
+        IgnorePixelScaling = !UsePixelScaling;
         EnableTouchEvents = TouchInputEnabled;
         _hasTouch = false;
     }

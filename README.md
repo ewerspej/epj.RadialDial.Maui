@@ -31,6 +31,7 @@ For use in Desktop applications, the ```TouchInputEnabled``` property needs to b
 * Adjustable Scale (unit labels are currently not featured yet, but the scale steps can be defined)
 * Show/Hide Scale
 * **NEW** Color Gradient for Dial
+* **NEW** Pixel Scaling support
 
 ## Preview
 
@@ -150,10 +151,12 @@ Most of these properties are bindable for MVVM goodness. If something is missing
 | Color       | ScaleColor           | The color of the scale on the dial                                      | `LightGray`   |
 | Boolean     | UseGradient          | Set to `true` in order to enable Color Gradient                         | `false`       |
 | List<Color> | GradientColors       | List of Colors used for Gradient (from first to last)                   | `<empty>`     |
+| Boolean     | UsePixelScaling      | When set to `true`, SkiaSharp's Pixel Scaling will be used              | `false`       |
 
 ## Tips & Tricks
 
 * Although the scale is on the outside of the dial by default, you can also draw it inside the dial by adjusting the values for *InternalPadding*, *StrokeWidth* and *ScaleDistance*
+* *Pixel Scaling* can be used to ensure that a control looks identical on every device. **Note that this may impact performance and small controls may look tiny on small screens.**
 
 ## Notes
 * Uses SkiaSharp for MAUI

@@ -20,12 +20,13 @@
       Min="0"
       Max="60"
       ShowScale="True"
-      InternalPadding="10"
-      ScaleDistance="10"
-      ScaleLength="24"
-      ScaleThickness="8"
+      InternalPadding="2"
+      ScaleDistance="6"
+      ScaleLength="12"
+      ScaleThickness="4"
       ScaleUnits="5"
-      UseGradient="True">
+      UseGradient="True"
+      UsePixelScaling="True">
       <maui:RadialDial.GradientColors>
         <Color>DarkGreen</Color>
         <Color>YellowGreen</Color>
@@ -47,6 +48,7 @@
       Minimum="1"
       Maximum="300"
       Value="45"/>
+
   </VerticalStackLayout>
 
 </ContentPage>
