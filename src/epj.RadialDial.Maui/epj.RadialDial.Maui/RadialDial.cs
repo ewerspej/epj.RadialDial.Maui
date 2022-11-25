@@ -119,9 +119,11 @@ public sealed class RadialDial : SKCanvasView
 
     public List<Color> GradientColors { get; set; } = new();
 
-    public bool TouchInputEnabled { get; set; }
-
-    public bool UsePixelScaling { get; set; }
+    public bool TouchInputEnabled
+    {
+        get => (bool)GetValue(TouchInputEnabledProperty);
+        set => SetValue(TouchInputEnabledProperty, value);
+    }
 
     #endregion
 
@@ -157,13 +159,14 @@ public sealed class RadialDial : SKCanvasView
 
     public static readonly BindableProperty UseGradientProperty = BindableProperty.Create(nameof(UseGradient), typeof(bool), typeof(RadialDial), false, propertyChanged: OnBindablePropertyChanged);
 
+    public static readonly BindableProperty TouchInputEnabledProperty = BindableProperty.Create(nameof(TouchInputEnabled), typeof(bool), typeof(RadialDial), false, propertyChanged: OnTouchInputEnabledPropertyChanged);
+
     #endregion
 
     #region Constructor
 
     public RadialDial()
     {
-        IgnorePixelScaling = !UsePixelScaling;
         EnableTouchEvents = TouchInputEnabled;
         _hasTouch = false;
     }

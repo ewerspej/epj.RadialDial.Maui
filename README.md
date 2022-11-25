@@ -151,12 +151,12 @@ Most of these properties are bindable for MVVM goodness. If something is missing
 | Color       | ScaleColor           | The color of the scale on the dial                                      | `LightGray`   |
 | Boolean     | UseGradient          | Set to `true` in order to enable Color Gradient                         | `false`       |
 | List<Color> | GradientColors       | List of Colors used for Gradient (from first to last)                   | `<empty>`     |
-| Boolean     | UsePixelScaling      | When set to `true`, SkiaSharp's Pixel Scaling will be used              | `false`       |
+| Boolean     | IgnorePixelScaling   | When set to `true` no pixel scaling will occur                          | `false`       |
 
 ## Tips & Tricks
 
 * Although the scale is on the outside of the dial by default, you can also draw it inside the dial by adjusting the values for *InternalPadding*, *StrokeWidth* and *ScaleDistance*
-* *Pixel Scaling* can be used to ensure that a control looks identical on every device. **Note that this may impact performance and small controls may look tiny on small screens.**
+* Note About **Pixel Scaling**: By default, when false, the canvas is resized to 1 canvas pixel per display pixel. When true, the canvas is resized to device independent pixels, and then stretched to fill the view. Although performance is improved and all objects are the same size on different display densities, blurring and pixelation may occur.
 
 ## Notes
 * Uses SkiaSharp for MAUI

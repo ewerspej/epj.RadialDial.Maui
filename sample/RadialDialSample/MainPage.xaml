@@ -20,13 +20,13 @@
       Min="0"
       Max="60"
       ShowScale="True"
-      InternalPadding="2"
-      ScaleDistance="6"
-      ScaleLength="12"
-      ScaleThickness="4"
+      InternalPadding="10"
+      ScaleDistance="10"
+      ScaleLength="24"
+      ScaleThickness="8"
       ScaleUnits="5"
       UseGradient="True"
-      UsePixelScaling="True">
+      IgnorePixelScaling="False">
       <maui:RadialDial.GradientColors>
         <Color>DarkGreen</Color>
         <Color>YellowGreen</Color>
