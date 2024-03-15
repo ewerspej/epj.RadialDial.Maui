@@ -242,7 +242,7 @@ public sealed class RadialDial : SKCanvasView
             var p1 = rad.ToPointOnCircle(_scaleCenter, _scaleRect.Width / 2 - ScaleLength);
 
             using var path = new SKPath();
-            path.AddPoly(new[] { p0, p1 }, close: false);
+            path.AddPoly([p0, p1], close: false);
 
             _canvas.DrawPath(path, new SKPaint
             {
@@ -293,13 +293,11 @@ public sealed class RadialDial : SKCanvasView
         using var dialPath = new SKPath();
         dialPath.AddArc(_dialRect, StartAngle, sweepAngle);
 
-        using var dialPaint = new SKPaint
-        {
-            Style = SKPaintStyle.Stroke,
-            Color = DialColor.ToSKColor(),
-            StrokeWidth = DialWidth,
-            IsAntialias = true
-        };
+        using var dialPaint = new SKPaint();
+        dialPaint.Style = SKPaintStyle.Stroke;
+        dialPaint.Color = DialColor.ToSKColor();
+        dialPaint.StrokeWidth = DialWidth;
+        dialPaint.IsAntialias = true;
 
         if (UseGradient && GradientColors?.Count > 0)
         {
