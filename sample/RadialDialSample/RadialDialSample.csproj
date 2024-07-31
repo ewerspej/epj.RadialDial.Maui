@@ -30,12 +30,6 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android|AnyCPU'">
-	  <AndroidPackageFormat>apk</AndroidPackageFormat>
-	  <PublishTrimmed>False</PublishTrimmed>
-	  <RunAOTCompilation>False</RunAOTCompilation>
-	</PropertyGroup>
-
 	<PropertyGroup Condition="'$(TargetFramework)'=='net8.0-ios'">
 	  <ProvisioningType>manual</ProvisioningType>
 	</PropertyGroup>
@@ -63,8 +57,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.10" />
-	  <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.10" />
+	  <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.61" />
+	  <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.61" />
 	</ItemGroup>
 
 </Project>
