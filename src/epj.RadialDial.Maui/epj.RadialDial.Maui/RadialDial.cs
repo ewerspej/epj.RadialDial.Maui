@@ -8,7 +8,7 @@ public sealed class RadialDial : SKCanvasView
 {
     #region Constants
 
-    private const float StartAngle = -90.0f;
+    private const float _startAngle = -90.0f;
 
     #endregion
 
@@ -232,7 +232,7 @@ public sealed class RadialDial : SKCanvasView
 
         //rotate canvas before drawing scale element
         _canvas.Save();
-        _canvas.RotateDegrees(StartAngle, _dialCenter.X, _dialCenter.Y);
+        _canvas.RotateDegrees(_startAngle, _dialCenter.X, _dialCenter.Y);
 
         //draw scale elements for each angle
         foreach (var angle in angles)
@@ -269,7 +269,7 @@ public sealed class RadialDial : SKCanvasView
                 .MapToCircle(_dialCenter, _dialRect.Width / 2)
                 .ToAngle(_dialCenter);
 
-            sweepAngle = (touchAngle + StartAngle).NormalizeAngleTo360();
+            sweepAngle = (touchAngle + _startAngle).NormalizeAngleTo360();
 
             var resultValue = Min + (deltaMaxMin / 360.0f * sweepAngle);
 
@@ -291,7 +291,7 @@ public sealed class RadialDial : SKCanvasView
         }
 
         using var dialPath = new SKPath();
-        dialPath.AddArc(_dialRect, StartAngle, sweepAngle);
+        dialPath.AddArc(_dialRect, _startAngle, sweepAngle);
 
         using var dialPaint = new SKPaint();
         dialPaint.Style = SKPaintStyle.Stroke;
@@ -303,7 +303,7 @@ public sealed class RadialDial : SKCanvasView
         {
             var colors = GradientColors.Select(color => color.ToSKColor()).ToArray();
             dialPaint.Shader = SKShader.CreateSweepGradient(_dialCenter, colors, SKShaderTileMode.Decal, 0.0f, 360.0f)
-                .WithLocalMatrix(SKMatrix.CreateRotationDegrees(StartAngle, _dialCenter.X, _dialCenter.Y));
+                .WithLocalMatrix(SKMatrix.CreateRotationDegrees(_startAngle, _dialCenter.X, _dialCenter.Y));
         }
         else
         {

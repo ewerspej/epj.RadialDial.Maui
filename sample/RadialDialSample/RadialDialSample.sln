@@ -7,6 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RadialDialSample", "RadialD
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "epj.RadialDial.Maui", "..\..\src\epj.RadialDial.Maui\epj.RadialDial.Maui\epj.RadialDial.Maui.csproj", "{23A9EF67-1F5A-4D87-A20F-6216103AD5E1}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{547D1C69-5628-4992-9689-4B7B7E471AD8}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\.editorconfig = ..\..\.editorconfig
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

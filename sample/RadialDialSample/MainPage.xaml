@@ -1,12 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:maui="clr-namespace:epj.RadialDial.Maui;assembly=epj.RadialDial.Maui"
-             x:Class="RadialDialSample.MainPage">
+<ContentPage
+  x:Class="RadialDialSample.MainPage"
+  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:maui="clr-namespace:epj.RadialDial.Maui;assembly=epj.RadialDial.Maui">
 
-  <VerticalStackLayout
-    VerticalOptions="Center"
-    Spacing="20">
+  <VerticalStackLayout VerticalOptions="Center" Spacing="20">
 
     <maui:RadialDial
       x:Name="RadialControlControl"
@@ -35,19 +34,19 @@
       </maui:RadialDial.GradientColors>
     </maui:RadialDial>
 
-    <Label 
+    <Label
       HorizontalOptions="Fill"
       FontSize="20"
       HeightRequest="50"
       HorizontalTextAlignment="Center"
       VerticalTextAlignment="Center"
-      Text="{Binding Path=Value, Source={x:Reference RadialControlControl}}"/>
+      Text="{Binding Path=Value, Source={x:Reference RadialControlControl}}" />
 
-    <Slider 
+    <Slider
       x:Name="DialWidthSlider"
       Minimum="1"
       Maximum="300"
-      Value="45"/>
+      Value="45" />
 
   </VerticalStackLayout>
 
